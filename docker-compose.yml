@@ -1,0 +1,41 @@
+name: belikov-example-api
+
+services:
+  api:
+    build:
+      context: ./.docker
+      target: dev
+      args:
+        env: "dev"
+    restart: unless-stopped
+    tty: true
+    networks:
+      - belikov_example_api
+    expose:
+      - 9000
+      - 9003
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    environment:
+      PHP_XDEBUG_MODE: debug
+      PHP_XDEBUG_START_WITH_REQUEST: trigger
+
+  webserver:
+    image: nginx:stable
+    restart: unless-stopped
+    tty: true
+    networks:
+      - belikov_example_api
+    working_dir: /var/www
+    volumes:
+      - ./.docker/dev/etc/nginx/conf.d/all.conf:/etc/nginx/conf.d/all.conf
+      - ./.docker/dev/etc/nginx/conf.d/nginx.crt:/etc/nginx/conf.d/nginx.crt
+      - ./.docker/dev/etc/nginx/conf.d/nginx.key:/etc/nginx/conf.d/nginx.key
+      - ./:/var/www
+    ports:
+      - "8000:80"
+
+networks:
+  belikov_example_api:
+    driver: bridge
