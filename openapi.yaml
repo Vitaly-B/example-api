@@ -1,0 +1,53 @@
+openapi: 3.0.0
+info:
+  title: Example API
+  description: Example API
+  version: 1.0.0
+servers:
+  - url: http://localhost:8000
+security:
+  - bearerAuth: []
+paths:
+  /api/v1/sum-even:
+    post:
+      security: []
+      summary: Returns sum of even numbers
+      tags:
+        - Example
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                numbers:
+                  type: array
+                  description: Array of numbers
+                  items:
+                    type: number
+              required:
+                - numbers
+      responses:
+        '200':
+          description: Sum of even numbers
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: number
+                    description: Sum of even numbers
+        '400':
+          description: An error occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: An error occurred.
