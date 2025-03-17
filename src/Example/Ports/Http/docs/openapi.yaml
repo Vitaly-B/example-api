@@ -8,7 +8,7 @@ servers:
 security:
   - bearerAuth: []
 paths:
-  /api/v1/sum-even:
+  /api/sum-even:
     post:
       security: []
       summary: Returns sum of even numbers
@@ -38,7 +38,7 @@ paths:
                   data:
                     type: object
                     properties:
-                      sumEven:
+                      sum:
                         type: integer
                         description: Sum of even numbers
         '422':

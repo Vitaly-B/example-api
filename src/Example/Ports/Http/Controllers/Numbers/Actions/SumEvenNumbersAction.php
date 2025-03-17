@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace app\src\Example\Ports\Http\Controllers\Numbers\Actions;
 
 use app\src\Application\Components\Request;
+use app\src\Example\Application\DTO\Numbers\SumEvenDTO;
 use app\src\Example\Application\QueryHandlers\Numbers\SumEvenQueryHandler;
 use app\src\Example\Application\Validation\Numbers\NumbersConstraints;
 use app\src\Example\Domain\Queries\Numbers\SumEvenQuery;
@@ -28,14 +29,12 @@ final class SumEvenNumbersAction extends Action
     /**
      * @throws InvalidConfigException
      */
-    public function run(Request $request): array
+    public function run(Request $request): SumEvenDTO
     {
         $data = $request->getBodyParams();
 
         $this->validator->validate($data, new NumbersConstraints());
 
-        return [
-            'data' => ($this->handler)(query: SumEvenQuery::fromArray($data)),
-        ];
+        return ($this->handler)(query: SumEvenQuery::fromArray($data));
     }
 }
