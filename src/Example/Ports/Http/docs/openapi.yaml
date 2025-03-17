@@ -36,8 +36,28 @@ paths:
                 type: object
                 properties:
                   data:
-                    type: number
-                    description: Sum of even numbers
+                    type: object
+                    properties:
+                      sumEven:
+                        type: integer
+                        description: Sum of even numbers
+        '422':
+          description: An validation error occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 422
+                  message:
+                    type: string
+                    example: An validation error occurred.
+                  errors:
+                    type: array
+                    items:
+                      type: array
         '400':
           description: An error occurred.
           content:
@@ -48,6 +68,19 @@ paths:
                   code:
                     type: integer
                     example: 400
+                  message:
+                    type: string
+                    example: An error occurred.
+        '500':
+          description: An other error occurred.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 500
                   message:
                     type: string
                     example: An error occurred.
